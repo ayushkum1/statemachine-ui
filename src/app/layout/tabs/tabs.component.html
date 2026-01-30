@@ -1,0 +1,35 @@
+<div class="tabs-container">
+  <div class="tabs">
+    <button
+      [class.active]="activeTab === 'dashboard'"
+      (click)="setTab('dashboard')"
+    >
+      Dashboard
+    </button>
+
+    <button
+      [class.active]="activeTab === 'workflows'"
+      (click)="setTab('workflows')"
+    >
+      Workflows
+    </button>
+
+    <button
+      [class.active]="activeTab === 'reports'"
+      (click)="setTab('reports')"
+    >
+      Reports
+    </button>
+
+    <button [class.active]="activeTab === 'editor'" (click)="setTab('editor')">
+      Editor
+    </button>
+  </div>
+
+  <div class="tab-content">
+    <app-dashboard *ngIf="activeTab === 'dashboard'"></app-dashboard>
+    <app-workflows *ngIf="activeTab === 'workflows'"></app-workflows>
+    <app-reports *ngIf="activeTab === 'reports'"></app-reports>
+    <app-editor *ngIf="activeTab === 'editor'"></app-editor>
+  </div>
+</div>

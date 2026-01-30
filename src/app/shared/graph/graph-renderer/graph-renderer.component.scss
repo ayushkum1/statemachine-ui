@@ -1,0 +1,12 @@
+.graph-canvas {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+.edges path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nodes {
+  pointer-events: all;
+}

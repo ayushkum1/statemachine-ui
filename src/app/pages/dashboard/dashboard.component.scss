@@ -1,0 +1,68 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+  }
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.graph-btn {
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.expanded-row {
+  background-color: #f9fafb;
+}
+
+.inner-table {
+  width: 100%;
+  margin-top: 8px;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f3f4f6;
+  }
+
+  tr.current {
+    background-color: #e0f2fe;
+    font-weight: 600;
+  }
+}
+
+/* MODAL PLACEHOLDER */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

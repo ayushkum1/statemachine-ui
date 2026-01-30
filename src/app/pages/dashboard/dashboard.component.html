@@ -1,0 +1,91 @@
+<h2>Dashboard</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Workflow</th>
+      <th>Business Ref</th>
+      <th>Status</th>
+      <th>Current State</th>
+      <th>Created</th>
+      <th>Created By</th>
+      <th>Updated</th>
+      <th>Updated By</th>
+      <th>Graph</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <ng-container *ngFor="let row of rows">
+      <!-- MAIN ROW -->
+      <tr>
+        <td>
+          <button class="expand-btn" (click)="toggleRow(row)">
+            {{ row.expanded ? "▼" : "▶" }}
+          </button>
+        </td>
+
+        <td>{{ row.instance.workflowName }}</td>
+        <td>{{ row.instance.businessReferenceId || "-" }}</td>
+        <td>{{ row.instance.status }}</td>
+        <td>{{ row.instance.currentStateId || "-" }}</td>
+        <td>{{ row.instance.createdDateTime }}</td>
+        <td>{{ row.instance.createdBy || "-" }}</td>
+        <td>{{ row.instance.updatedDateTime }}</td>
+        <td>{{ row.instance.updatedBy || "-" }}</td>
+
+        <td>
+          <button class="graph-btn" (click)="openGraph(row)">Graph</button>
+        </td>
+      </tr>
+
+      <!-- EXPANDED ROW -->
+      <tr *ngIf="row.expanded" class="expanded-row">
+        <td colspan="10">
+          <h4>Transitions</h4>
+
+          <table class="inner-table">
+            <thead>
+              <tr>
+                <th>Source State</th>
+                <th>Target State</th>
+                <th>Event</th>
+                <th>Action</th>
+                <th>Guard</th>
+                <th>Join</th>
+                <th>Junction</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                *ngFor="let t of row.transitions"
+                [class.current]="isCurrentSourceTransition(t, row.instance)"
+              >
+                <td>{{ t.sourceStateId }}</td>
+                <td>{{ t.targetStateId }}</td>
+                <td>{{ t.event || "-" }}</td>
+                <td>{{ t.applyAction ? "✔" : "✖" }}</td>
+                <td>{{ t.applyGuard ? "✔" : "✖" }}</td>
+                <td>{{ t.applyJoin ? "✔" : "✖" }}</td>
+                <td>{{ t.applyJunction ? "✔" : "✖" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<app-modal [visible]="showGraphModal" size="large" (close)="closeGraph()">
+  <h3>Workflow Graph</h3>
+
+  <app-graph-renderer
+    *ngIf="selectedWorkflowId"
+    [graph]="
+      graphFacade.getInstanceGraph(selectedWorkflowId, selectedCurrentStateId)
+    "
+  ></app-graph-renderer>
+</app-modal>

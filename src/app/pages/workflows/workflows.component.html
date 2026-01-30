@@ -1,0 +1,74 @@
+<h2>Workflows</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Workflow Name</th>
+      <th>Business Process</th>
+      <th>Graph</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <ng-container *ngFor="let row of rows">
+      <!-- MAIN ROW -->
+      <tr>
+        <td>
+          <button class="expand-btn" (click)="toggleRow(row)">
+            {{ row.expanded ? "▼" : "▶" }}
+          </button>
+        </td>
+
+        <td>{{ row.workflow.name }}</td>
+        <td>{{ row.workflow.businessProcessName }}</td>
+
+        <td>
+          <button class="graph-btn" (click)="openGraph(row)">Graph</button>
+        </td>
+      </tr>
+
+      <!-- EXPANDED ROW -->
+      <tr *ngIf="row.expanded" class="expanded-row">
+        <td colspan="4">
+          <h4>Transitions</h4>
+
+          <table class="inner-table">
+            <thead>
+              <tr>
+                <th>Source State</th>
+                <th>Target State</th>
+                <th>Event</th>
+                <th>Action</th>
+                <th>Guard</th>
+                <th>Join</th>
+                <th>Junction</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let t of row.transitions">
+                <td>{{ t.sourceStateId }}</td>
+                <td>{{ t.targetStateId }}</td>
+                <td>{{ t.event || "-" }}</td>
+                <td>{{ t.applyAction ? "✔" : "✖" }}</td>
+                <td>{{ t.applyGuard ? "✔" : "✖" }}</td>
+                <td>{{ t.applyJoin ? "✔" : "✖" }}</td>
+                <td>{{ t.applyJunction ? "✔" : "✖" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<app-modal [visible]="showGraphModal" size="large" (close)="closeGraph()">
+  <h3>Workflow Graph</h3>
+
+  <app-graph-renderer
+    *ngIf="selectedWorkflowId"
+    [graph]="graphFacade.getWorkflowGraph(selectedWorkflowId)"
+  ></app-graph-renderer>
+</app-modal>

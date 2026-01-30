@@ -1,0 +1,13 @@
+<div class="modal-backdrop" *ngIf="visible" (click)="onBackdropClick()">
+  <div
+    class="modal"
+    [class.large]="size === 'large'"
+    (click)="$event.stopPropagation()"
+  >
+    <button class="close-btn" (click)="onCloseClick()">×</button>
+
+    <div class="modal-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
