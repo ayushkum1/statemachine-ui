@@ -43,9 +43,10 @@
 /* Sub-workflow Plus Button */
 .sub-workflow-btn {
   cursor: pointer;
+  transition: opacity 0.2s;
 }
 .sub-workflow-btn:hover {
-  transform: scale(1.2);
+  opacity: 0.8;
 }
 
 /* Modal Overlay Styles */

@@ -77,3 +77,22 @@
   border: 1px dashed #ccc;
   border-radius: 8px;
 }
+.graph-modal-container {
+  display: flex;
+  flex-direction: column;
+  height: 95%; /* Set a fixed height for the modal content */
+}
+
+.controls {
+  padding: 10px;
+  background: #f3f4f6;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.graph-viewport {
+  flex: 1;
+  background: #fafafa;
+}

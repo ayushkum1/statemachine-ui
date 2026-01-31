@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WorkflowApiService } from '../../core/services/workflow-api.service';
 import { WorkflowInstance } from '../../core/models/workflow-instance.model';
 import { Transition } from '../../core/models/transition.model';
+import { GraphRendererComponent } from '../graph-renderer/graph-renderer.component';
 
 interface DashboardRow {
   instance: WorkflowInstance;
@@ -16,7 +17,7 @@ interface DashboardRow {
 })
 export class DashboardComponent implements OnInit {
   rows: DashboardRow[] = [];
-
+  zoomLevel: number = 1.0;
   showGraphModal = false;
   graphLayout: any | null = null;
 
@@ -42,10 +43,6 @@ export class DashboardComponent implements OnInit {
     row.expanded = !row.expanded;
   }
 
-  openGraph(row: DashboardRow): void {
-    this.showGraphModal = true;
-  }
-
   closeGraph(): void {
     this.showGraphModal = false;
   }
@@ -55,5 +52,23 @@ export class DashboardComponent implements OnInit {
     instance: WorkflowInstance
   ): boolean {
     return transition.sourceStateId === instance.currentStateId;
+  }
+
+  zoomIn() {
+    this.zoomLevel = Math.min(this.zoomLevel + 0.1, 2.0);
+  }
+
+  zoomOut() {
+    this.zoomLevel = Math.max(this.zoomLevel - 0.1, 0.5);
+  }
+
+  resetZoom() {
+    this.zoomLevel = 1.0;
+  }
+
+  // Ensure we reset zoom when opening a new graph
+  openGraph(row: DashboardRow): void {
+    this.zoomLevel = 1.0;
+    this.showGraphModal = true;
   }
 }

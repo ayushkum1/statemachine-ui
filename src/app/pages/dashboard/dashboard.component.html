@@ -80,7 +80,15 @@
 </table>
 
 <app-modal [visible]="showGraphModal" size="large" (close)="closeGraph()">
-  <div class="graph-placeholder">
-    <app-graph-renderer></app-graph-renderer>
+  <div class="graph-modal-container">
+    <div class="controls">
+      <button (click)="zoomIn()">Zoom In (+)</button>
+      <button (click)="zoomOut()">Zoom Out (-)</button>
+      <button (click)="resetZoom()">Reset / Fit</button>
+    </div>
+
+    <div class="graph-viewport">
+      <app-graph-renderer [zoomLevel]="zoomLevel"></app-graph-renderer>
+    </div>
   </div>
 </app-modal>

@@ -21,11 +21,12 @@ export class GraphRendererComponent implements OnInit, AfterViewInit {
   absMinY = 0;
   positionedStates: State[] = [];
   transitions: Transition[] = [];
-  zoomLevel: number = 1.0;
+  @Input() zoomLevel: number = 1.0;
   hoveredTransitionId: number | null = null;
   svgWidth: number = 0;
   svgHeight: number = 0;
   @Input() subWorkflowId: number | null = null;
+
   isModalOpen = false;
   isLogicModalOpen = false;
   selectedSubWorkflowId: number | null = null;
@@ -58,7 +59,7 @@ export class GraphRendererComponent implements OnInit, AfterViewInit {
   loadGraph() {
     // Determine which ID to use: the input from parent, or default to 1
     console.log('this.selectedSubWorkflowId', this.selectedSubWorkflowId);
-    const idToFetch = this.subWorkflowId || this.selectedSubWorkflowId || 1;
+    const idToFetch = this.subWorkflowId || this.selectedSubWorkflowId || 9;
 
     console.log('Fetching Workflow ID:', idToFetch);
 
@@ -70,13 +71,10 @@ export class GraphRendererComponent implements OnInit, AfterViewInit {
     console.log('current_state_id: ', this.currentStateId);
     // Ensure we use data.rawStates or data.states based on your service structure
     this.calculateLayout(data.states || data.states);
-
-    setTimeout(() => this.resetZoom(), 100);
   }
 
   ngAfterViewInit() {
     // Initial centering and fitting
-    setTimeout(() => this.resetZoom(), 300);
   }
 
   // --- CANVAS DIMENSION LOGIC ---
@@ -94,34 +92,6 @@ export class GraphRendererComponent implements OnInit, AfterViewInit {
     // Set SVG pixel size based on content * zoom to trigger container overflow
     this.svgWidth = (maxX + 200) * this.zoomLevel;
     this.svgHeight = (maxY + 200) * this.zoomLevel;
-  }
-
-  // --- ZOOM CONTROLS ---
-  zoomIn() {
-    this.zoomLevel = Math.min(this.zoomLevel + 0.1, 2);
-    this.updateCanvasDimensions();
-  }
-
-  zoomOut() {
-    this.zoomLevel = Math.max(this.zoomLevel - 0.1, 0.2);
-    this.updateCanvasDimensions();
-  }
-
-  resetZoom() {
-    if (!this.container) return;
-
-    const container = this.container.nativeElement;
-    const cw = container.offsetWidth;
-    const ch = container.offsetHeight;
-
-    if (cw <= 0 || ch <= 0) return;
-
-    // Fit the calculated graph area into the visible container
-    const scaleX = cw / this.svgWidth;
-    const scaleY = ch / this.svgHeight;
-
-    // Use the smaller scale to ensure nothing is cut off
-    this.zoomLevel = Math.min(scaleX, scaleY, 1.0);
   }
 
   // --- LAYOUT ENGINE ---
@@ -223,7 +193,6 @@ export class GraphRendererComponent implements OnInit, AfterViewInit {
     this.svgHeight = Math.max(maxY + this.absMinY + 100, containerHeight);
 
     // 5. Trigger zoom reset once layout is known
-    setTimeout(() => this.resetZoom(), 10);
 
     // const minY = Math.min(...this.positionedStates.map((s) => s.y!));
     this.absMinY = Math.abs(minY) + 100;
