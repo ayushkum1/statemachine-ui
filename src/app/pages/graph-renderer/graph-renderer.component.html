@@ -1,0 +1,221 @@
+<div class="controls">
+  <button (click)="zoomIn()">Zoom In (+)</button>
+  <button (click)="zoomOut()">Zoom Out (-)</button>
+  <button (click)="resetZoom()">Reset / Fit</button>
+</div>
+
+<div class="workflow-container" #container>
+  <svg [attr.width]="svgWidth" [attr.height]="svgHeight">
+    <defs>
+      <filter id="stateGlow" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="15" result="blur" />
+        <feComposite
+          in="blur"
+          in2="SourceGraphic"
+          operator="out"
+          result="glowOnly"
+        />
+        <feFlood flood-color="#e56618" flood-opacity="1" result="glowColor" />
+        <feComposite
+          in="glowColor"
+          in2="glowOnly"
+          operator="in"
+          result="softGlow"
+        />
+        <feMerge>
+          <feMergeNode in="softGlow" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+
+      <marker
+        id="arrow"
+        viewBox="0 0 10 10"
+        refX="10"
+        refY="5"
+        markerWidth="6"
+        markerHeight="6"
+        orient="auto"
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke" />
+      </marker>
+    </defs>
+
+    <g
+      [attr.transform]="
+        'scale(' + zoomLevel + ') translate(0, ' + absMinY + ')'
+      "
+    >
+      <g
+        *ngFor="let trans of transitions"
+        (mouseenter)="hoveredTransitionId = trans.TRANSITION_ID"
+        (mouseleave)="hoveredTransitionId = null"
+      >
+        <polyline
+          [attr.points]="getOrthogonalPath(trans)"
+          fill="none"
+          [attr.stroke]="getEdgeColor(trans)"
+          [attr.stroke-width]="getEdgeWidth(trans)"
+          marker-end="url(#arrow)"
+          class="edge-line"
+        />
+        <text
+          *ngIf="trans.EVENT"
+          [attr.x]="getLabelPos(trans).x"
+          [attr.y]="getLabelPos(trans).y"
+          [attr.text-anchor]="getLabelPos(trans).anchor"
+          [class.event-text-highlighted]="isEdgeActive(trans)"
+          class="event-text"
+        >
+          {{ trans.EVENT }}
+        </text>
+      </g>
+
+      <g
+        *ngFor="let state of positionedStates"
+        (mouseenter)="hoveredStateId = state.id"
+        (mouseleave)="hoveredStateId = null"
+      >
+        <circle
+          *ngIf="state.type === 'start' || state.type === 'end'"
+          [attr.cx]="state.x"
+          [attr.cy]="state.y"
+          [attr.r]="CIRCLE_RADIUS"
+          [attr.class]="
+            state.type === 'start'
+              ? 'state-circle state-start'
+              : 'state-circle state-end'
+          "
+          [class.is-current-state]="state.id === currentStateId"
+          [attr.filter]="state.id === currentStateId ? 'url(#stateGlow)' : null"
+        />
+
+        <rect
+          *ngIf="state.type !== 'start' && state.type !== 'end'"
+          [attr.x]="state.x! - RECT_WIDTH / 2"
+          [attr.y]="state.y! - RECT_HEIGHT / 2"
+          [attr.width]="RECT_WIDTH"
+          [attr.height]="RECT_HEIGHT"
+          [attr.class]="
+            state.type === 'failed'
+              ? 'state-rect-failed'
+              : isJunction(state)
+              ? 'state-rect-junction'
+              : 'state-rect'
+          "
+          [class.is-current-state]="state.id === currentStateId"
+          [attr.filter]="state.id === currentStateId ? 'url(#stateGlow)' : null"
+          rx="8"
+        />
+
+        <text
+          [attr.x]="state.x"
+          [attr.y]="state.y! - 5"
+          class="state-label"
+          dominant-baseline="middle"
+        >
+          {{ state.name }}
+        </text>
+
+        <text
+          *ngIf="state.id === currentStateId"
+          [attr.x]="state.x"
+          [attr.y]="state.y! - (RECT_HEIGHT / 2 + 10)"
+          class="current-state-badge"
+        >
+          CURRENT STATE
+        </text>
+
+        <g
+          *ngIf="state.type !== 'start' && state.type !== 'end'"
+          [attr.transform]="
+            'translate(' +
+            (state.x! + RECT_WIDTH / 2 - 25) +
+            ',' +
+            (state.y! + RECT_HEIGHT / 2 - 20) +
+            ')'
+          "
+        >
+          <g
+            *ngFor="let marker of getStateLogicMarkers(state.id); let i = index"
+            [attr.transform]="'translate(' + i * -35 + ', 0)'"
+            class="logic-marker"
+            (click)="openLogicDetails($event, marker, state)"
+          >
+            <circle
+              r="14"
+              [attr.fill]="marker.color"
+              stroke="white"
+              stroke-width="2"
+            />
+            <text *ngIf="marker.type === 'action'" dy="5" class="material-icon">
+              ⚙
+            </text>
+            <text *ngIf="marker.type === 'guard'" dy="5" class="material-icon">
+              🛡
+            </text>
+            <text
+              *ngIf="marker.type === 'activity'"
+              dy="5"
+              class="material-icon"
+            >
+              👤
+            </text>
+          </g>
+        </g>
+
+        <g
+          *ngIf="state.sub_workflow_id"
+          class="sub-workflow-btn"
+          (click)="openSubWorkflow(state.sub_workflow_id)"
+          [attr.transform]="
+            'translate(' + state.x + ',' + (state.y! + RECT_HEIGHT / 2) + ')'
+          "
+        >
+          <circle r="10" fill="#22c55e" stroke="white" stroke-width="2" />
+          <text
+            dy="4"
+            text-anchor="middle"
+            fill="white"
+            style="font-size: 14px; font-weight: bold"
+          >
+            +
+          </text>
+        </g>
+      </g>
+    </g>
+  </svg>
+</div>
+<div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Sub-Workflow Detail (ID: {{ selectedSubWorkflowId }})</h3>
+      <button (click)="closeModal()" class="close-x">✕</button>
+    </div>
+    <div class="modal-body">
+      <app-graph-renderer
+        *ngIf="selectedSubWorkflowId"
+        [subWorkflowId]="selectedSubWorkflowId"
+      ></app-graph-renderer>
+    </div>
+  </div>
+</div>
+<div
+  class="logic-modal"
+  *ngIf="isLogicModalOpen"
+  (click)="isLogicModalOpen = false"
+>
+  <div class="logic-modal-content" (click)="$event.stopPropagation()">
+    <div
+      class="logic-modal-header"
+      [style.background-color]="selectedLogicMarker?.color"
+    >
+      <span>{{ selectedLogicMarker?.title }}</span>
+      <button (click)="isLogicModalOpen = false" class="close-x">×</button>
+    </div>
+    <div class="logic-modal-body">
+      <p><strong>State:</strong> {{ selectedLogicMarker?.stateName }}</p>
+      <p>{{ selectedLogicMarker?.details }}</p>
+    </div>
+  </div>
+</div>

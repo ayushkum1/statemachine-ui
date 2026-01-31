@@ -1,0 +1,268 @@
+.workflow-container {
+  width: 100%;
+  height: 85vh;
+  overflow: auto;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  position: relative;
+}
+.controls {
+  padding: 10px;
+  background: #eee;
+  display: flex;
+  gap: 10px;
+}
+.state-rect {
+  fill: #fff4d1;
+  stroke: #d4a373;
+  stroke-width: 2px;
+}
+.state-rect-failed {
+  fill: #ffebee;
+  stroke: #e63946;
+  stroke-width: 2px;
+}
+.state-circle {
+  fill: white;
+  stroke: #333;
+  stroke-width: 2px;
+}
+.state-label {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 600;
+  fill: #333;
+  pointer-events: none;
+}
+.event-text {
+  font-size: 9px;
+  fill: #666;
+  font-style: italic;
+}
+
+/* Sub-workflow Plus Button */
+.sub-workflow-btn {
+  cursor: pointer;
+}
+.sub-workflow-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Modal Overlay Styles */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: white;
+  width: 90%;
+  height: 85%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.modal-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-body {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.close-x {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+/* New style for junction states */
+.state-rect-junction {
+  fill: #e0f2fe; /* Light blue background */
+  stroke: #0480b9; /* Bright blue border */
+  stroke-width: 2px;
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1));
+}
+/* General circle style (overriding existing) */
+.state-circle {
+  fill: white;
+  stroke: #333;
+  stroke-width: 2px;
+  transition: all 0.2s ease;
+}
+
+/* Specific styling for Start and End */
+.state-start {
+  fill: #f0fdf4; /* Very light green background */
+  stroke: #22c55e; /* Success green border */
+  stroke-width: 3px;
+}
+
+.state-end {
+  fill: #f0fdf4;
+  stroke: #16a34a; /* Slightly darker green border */
+  stroke-width: 3px;
+}
+
+/* Optional: Make the text inside/near them bold */
+.state-label-bold {
+  font-weight: 800;
+  fill: #14532d;
+}
+.transition-group {
+  cursor: pointer;
+}
+
+.edge-line {
+  transition: stroke 0.2s, stroke-width 0.2s;
+}
+
+.event-text {
+  font-size: 10px;
+  fill: #666;
+  font-style: italic;
+  font-weight: bold;
+  pointer-events: none; /* Allows hover to "pass through" to the group */
+  transition: fill 0.2s, font-size 0.2s;
+}
+
+/* Highlight style for the text */
+.event-text-highlighted {
+  fill: #e63946; /* Matches the red hover color of the edge */
+  font-size: 11px; /* Slightly larger to make it pop */
+}
+
+.event-text {
+  /* Increased from 10px to 12px or 13px */
+  font-size: 13px;
+  fill: #666;
+  font-style: italic;
+  font-weight: bold;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  /* Optional: adds clarity if text overlaps other elements */
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
+}
+
+.event-text-highlighted {
+  fill: #e63946;
+  /* Make it even more prominent on hover */
+  font-size: 14px;
+}
+
+/* The container stays fixed to the box */
+.logic-marker {
+  cursor: pointer;
+}
+
+/* We scale the circle and icon relative to their own center */
+.logic-marker circle,
+.logic-marker .material-icon {
+  transition: transform 0.2s ease-out;
+  transform-origin: center;
+  transform-box: fill-box; /* This is the key to stopping the vibration */
+}
+
+/* Apply scale only on hover */
+.logic-marker:hover circle,
+.logic-marker:hover .material-icon {
+  transform: scale(1.2);
+}
+
+.material-icon {
+  font-family: sans-serif;
+  font-size: 15px;
+  text-anchor: middle;
+  fill: white;
+  pointer-events: none; /* Prevents flickering when moving mouse over text gaps */
+}
+/* Small Detail Modal */
+.logic-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.logic-modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 300px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logic-modal-header {
+  padding: 10px 15px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.logic-modal-header button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.logic-modal-body {
+  padding: 15px;
+  font-size: 13px;
+  color: #444;
+}
+/* Add a subtle highlight to the state being hovered */
+.state-rect:hover,
+.state-rect-junction:hover,
+.state-rect-failed:hover {
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.1));
+  transition: stroke-width 0.2s ease;
+}
+
+/* Ensure edges have a smooth color transition */
+.edge-line {
+  transition: stroke 0.2s, stroke-width 0.2s;
+}
+/* Current State Highlight */
+/* Styling for the current state shape */
+.is-current-state {
+  stroke: #e56618 !important; /* The Blue color for the glow */
+  stroke-width: 4px !important;
+  fill: #e56618 !important; /* Subtle background change */
+}
+
+.current-state-badge {
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: bold;
+  fill: #e56618;
+}
+
+/* Ensure shapes don't clip the glow */
+svg {
+  overflow: visible;
+}

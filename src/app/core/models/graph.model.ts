@@ -1,48 +1,32 @@
-export interface Graph {
-  nodes: GraphNode[];
-  edges: GraphEdge[];
-  transitionGroups?: TransitionGroup[];
-}
-
-export interface GraphNode {
-  id: string;
-  label: string;
-  type: 'state' | 'guard' | 'action' | 'failure';
-
-  stateId?: number;
-  transitionId?: number;
-
-  isCurrent?: boolean;
-  hasSubWorkflow?: boolean;
-
+export interface State {
+  id: number;
+  name: string;
+  type: 'start' | 'end' | 'normal' | 'failed' | 'junction';
+  sub_workflow_id?: number;
   x?: number;
   y?: number;
-  width?: number;
-  height?: number;
+  rowIndex?: number;
+  direction?: 'LTR' | 'RTL';
 }
 
-export interface GraphEdge {
-  from: string;
-  to: string;
-  label?: string;
-  dashed?: boolean;
-
-  kind: 'main' | 'attachment' | 'failure' | 'action' | 'guard';
-  hidden?: boolean;
-
-  /** NEW — explicit ports */
-  fromPort?: 'top-25' | 'top-75' | 'bottom-25' | 'bottom-75';
-  toPort?: 'top-25' | 'top-75' | 'bottom-25' | 'bottom-75' | 'top-50';
+export interface Transition {
+  TRANSITION_ID: number;
+  SOURCE: string;
+  SOURCE_STATE_ID: number;
+  TARGET: string;
+  TARGET_STATE_ID: number;
+  DEF_WORKFLOW_ID: number;
+  EVENT: string | null;
+  APPLY_ACTION: number;
+  APPLY_GUARD: number;
+  APPLY_JUNCTION: number;
+  JUNCTION_INDEX: number;
+  APPLY_JOIN: number;
+  APPLY_ACTIVITY: number;
 }
 
-export interface TransitionGroup {
-  transitionId: number;
-  sourceStateId: number;
-  targetStateId: number;
-
-  hasGuard: boolean;
-  hasAction: boolean;
-
-  guardNodeId?: string;
-  actionNodeId?: string;
+export interface WorkflowGraph {
+  states: State[];
+  transitions: Transition[];
+  currentStateId: number | null;
 }

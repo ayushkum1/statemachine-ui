@@ -8,10 +8,11 @@ describe('GraphRendererComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GraphRendererComponent ]
-    })
-    .compileComponents();
+      declarations: [GraphRendererComponent],
+    }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(GraphRendererComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

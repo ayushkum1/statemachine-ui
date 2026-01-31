@@ -13,13 +13,13 @@
   background: #ffffff;
   border-radius: 8px;
   padding: 24px;
-  width: 500px;
+  width: 100%;
   max-width: 90%;
   max-height: 90%;
   overflow: auto;
 
   &.large {
-    width: 900px;
+    width: 100%;
   }
 }
 

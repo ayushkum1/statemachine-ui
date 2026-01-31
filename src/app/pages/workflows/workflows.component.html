@@ -65,10 +65,7 @@
 </table>
 
 <app-modal [visible]="showGraphModal" size="large" (close)="closeGraph()">
-  <h3>Workflow Graph</h3>
-
-  <app-graph-renderer
-    *ngIf="selectedWorkflowId"
-    [graph]="graphFacade.getWorkflowGraph(selectedWorkflowId)"
-  ></app-graph-renderer>
+  <div class="graph-placeholder">
+    <app-graph-renderer></app-graph-renderer>
+  </div>
 </app-modal>

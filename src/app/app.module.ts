@@ -11,7 +11,7 @@ import { EditorComponent } from './pages/editor/editor.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { TabsComponent } from './layout/tabs/tabs.component';
 import { ModalComponent } from './shared/modals/modal/modal.component';
-import { GraphRendererComponent } from './shared/graph/graph-renderer/graph-renderer.component';
+import { GraphRendererComponent } from './pages/graph-renderer/graph-renderer.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +24,10 @@ import { GraphRendererComponent } from './shared/graph/graph-renderer/graph-rend
     HeaderComponent,
     TabsComponent,
     ModalComponent,
-    GraphRendererComponent
+    GraphRendererComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
