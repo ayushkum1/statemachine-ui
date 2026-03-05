@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Pulse Newsletter</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f4f4; }
+        .wrapper { width: 100%; table-layout: fixed; background-color: #f4f4f4; padding-bottom: 40px; }
+        .main { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; border-spacing: 0; color: #333333; }
+        
+        /* Header Section */
+        .header { background: linear-gradient(rgba(0, 145, 89, 0.8), rgba(0, 145, 89, 0.9)), url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600') no-repeat center/cover; padding: 60px 20px; text-align: center; color: #ffffff; }
+        .header h1 { font-size: 32px; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+        .header p { font-size: 16px; margin-top: 10px; opacity: 0.9; }
+        .btn-subscribe { display: inline-block; margin-top: 20px; padding: 10px 25px; border: 2px solid #ffffff; color: #ffffff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 12px; }
+
+        /* Black Bar Section */
+        .black-bar { background-color: #000000; color: #ffffff; text-align: center; padding: 15px; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Content Sections */
+        .section-padding { padding: 40px 30px; }
+        .section-title { color: #009159; font-size: 20px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
+        .body-text { font-size: 14px; line-height: 1.6; color: #666666; margin-bottom: 20px; }
+
+        /* Peer Spotlight (Side-by-side) */
+        .spotlight-table { width: 100%; margin-bottom: 20px; }
+        .spotlight-img { width: 40%; padding-right: 20px; }
+        .spotlight-img img { width: 100%; border-radius: 4px; display: block; }
+
+        /* Success Cards (Two-Column) */
+        .card-container { width: 100%; border-spacing: 15px; margin: 0 -15px; }
+        .card { background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; width: 50%; vertical-align: top; }
+        .card-header { background-color: #009159; color: #ffffff; padding: 10px; text-align: center; font-weight: bold; font-size: 14px; border-radius: 7px 7px 0 0; }
+        .card-body { padding: 20px; font-size: 13px; text-align: center; color: #555555; }
+
+        /* Footer */
+        .footer { background-color: #000000; color: #ffffff; padding: 30px; text-align: center; }
+        .social-icons { margin-bottom: 15px; }
+        .social-icons span { display: inline-block; width: 30px; height: 30px; background: #333; border-radius: 50%; margin: 0 5px; line-height: 30px; font-size: 14px; }
+        .footer-text { font-size: 11px; color: #999999; }
+    </style>
+</head>
+<body>
+    <center class="wrapper">
+        <table class="main" width="100%">
+            <tr>
+                <td class="header">
+                    <p>BNP PARIBAS</p>
+                    <h1>AI PULSE</h1>
+                    <p>Empowering our teams through responsible AI innovation</p>
+                    <a href="#" class="btn-subscribe">Get Featured</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="black-bar">
+                    Bi-Weekly AI Adoption Newsletter
+                </td>
+            </tr>
+
+            <tr>
+                <td class="section-padding">
+                    <p class="body-text" style="text-align: center;">Welcome to this week's edition. We are spotlighting how real-world prompts are changing our daily workflows in the Mumbai Hub.</p>
+                    
+                    <table class="spotlight-table">
+                        <tr>
+                            <td class="spotlight-img">
+                                <img src="https://via.placeholder.com/200x250" alt="Peer Photo">
+                            </td>
+                            <td style="vertical-align: top;">
+                                <h2 class="section-title">Prompt Champion of the Week</h2>
+                                <p class="body-text"><strong>[Name Placeholder]</strong> from the <strong>[Team Placeholder]</strong> team saved [X] hours this week using a custom-built prompt for [Task Placeholder].</p>
+                                <p class="body-text" style="font-style: italic; background: #f9f9f9; padding: 10px; border-left: 4px solid #009159;">"Quote about how AI helped this person specifically..."</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="black-bar">
+                    Impact & Outcomes
+                </td>
+            </tr>
+
+            <tr>
+                <td class="section-padding" style="background-color: #fafafa;">
+                    <p class="body-text" style="text-align: center;">Discover the top prompt of the week and stay updated with AI news at BNPP.</p>
+                    
+                    <table class="card-container">
+                        <tr>
+                            <td class="card">
+                                <div class="card-header">THE WINNING PROMPT</div>
+                                <div class="card-body">
+                                    [Paste the exact copy-pasteable prompt here. Focus on the structure and instructions used to get the result.]
+                                </div>
+                            </td>
+                            <td class="card">
+                                <div class="card-header">AI ADOPTION NEWS</div>
+                                <div class="card-body">
+                                    [Summary of AI news from this week, internal tool updates, or governance reminders.]
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="section-padding">
+                    <h2 class="section-title" style="text-align: center;">Our AI Journey</h2>
+                    <p class="body-text" style="text-align: center;">As the SPOC for AI adoption, my goal is to ensure every team member feels equipped to use these tools safely and effectively. We are moving from manual repetition to creative problem solving.</p>
+                    <p class="body-text" style="text-align: center;">[Add additional details about upcoming workshops, MCP tool integrations, or repository-wide AI changes here.]</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="footer">
+                    <div class="social-icons">
+                        <span>in</span><span>t</span><span>f</span><span>y</span>
+                    </div>
+                    <p class="footer-text">© 2026 BNP Paribas Mumbai Hub. For internal use only.</p>
+                    <p class="footer-text">You are receiving this as part of the AI Adoption Initiative.</p>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>
